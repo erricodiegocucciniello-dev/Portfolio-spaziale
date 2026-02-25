@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio di Errico Diego Cucciniello, Studente di Bioinformatica.">
+    <title>Errico Diego Cucciniello - Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Fonts: Outfit per un look moderno e tech -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Sfondo per l'effetto particellare/spaziale -->
+    <canvas id="space-canvas"></canvas>
+
+    <!-- Header & Navigazione Glassmorphism -->
+    <header class="glass-header">
+        <nav class="navbar">
+            <div class="logo">
+                <span class="neon-text-blue">ED</span>C
+            </div>
+            <ul class="nav-links">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#about">Chi Sono</a></li>
+                <li><a href="#projects">Progetti</a></li>
+                <li><a href="#contact">Contatti</a></li>
+            </ul>
+            <!-- Menu Hamburger per Mobile -->
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="hero-section scroll-anim">
+            <div class="glass-panel text-center">
+                <p class="welcome-text">Benvenuto nel mio universo</p>
+                <h1>Sono <span class="neon-text-blue">Errico Diego Cucciniello</span></h1>
+                <p class="subtitle">Studente di Bioinformatica & Web Developer</p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn-neon-purple">Esplora Progetti</a>
+                    <a href="#about" class="btn-ghost">Scopri di Più</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sezione Chi Sono -->
+        <section id="about" class="about-section scroll-anim">
+            <div class="container">
+                <h2 class="section-title">Chi Sono</h2>
+                <div class="glass-panel about-content">
+                    <div class="about-text">
+                        <p>
+                            Appassionato di scienza, dati e tecnologia. In qualità di studente di
+                            <strong>Bioinformatica</strong>, il mio obiettivo è fondere le conoscenze biologiche con le
+                            competenze informatiche per decodificare e analizzare le complessità della vita.
+                        </p>
+                        <p>
+                            Oltre al mondo accademico, mi dedico allo sviluppo web creando soluzioni digitali moderne,
+                            funzionali e dal design accattivante.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sezione Progetti -->
+        <section id="projects" class="projects-section scroll-anim">
+            <div class="container">
+                <h2 class="section-title">I miei Progetti</h2>
+                <div class="projects-grid">
+                    <!-- Progetto 1 -->
+                    <article class="glass-panel project-card">
+                        <div class="project-image-placeholder">
+                            <!-- Qui andrà l'immagine o il render del progetto -->
+                            <span class="icon-molecule">🧬</span>
+                        </div>
+                        <div class="project-info">
+                            <h3>Laboratorio delle Proteine</h3>
+                            <p>Una piattaforma interattiva per visualizzare, simulare e analizzare le strutture
+                                molecolari delle proteine e le loro interazioni biochimiche.</p>
+                            <div class="tech-stack">
+                                <span class="glass-tag">Bioinformatica</span>
+                                <span class="glass-tag">3D Render</span>
+                                <span class="glass-tag">JavaScript</span>
+                            </div>
+                            <!-- Box Ricerca PDB -->
+                            <div class="pdb-search-box">
+                                <input type="text" id="pdb-input" class="glass-input-small"
+                                    placeholder="Es: 1A8M o Insulina...">
+                                <button id="analyze-btn" class="btn-neon-blue btn-small">Analizza</button>
+                            </div>
+                            <div id="pdb-loading" class="hidden">
+                                <div class="space-spinner"></div>
+                                <p>Scansione database PDB in corso...</p>
+                            </div>
+                            <div id="pdb-result" class="glass-panel result-panel hidden">
+                            </div>
+                            <!-- Fine Box -->
+                        </div>
+                    </article>
+                    <!-- Spazio per i futuri progetti -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Sezione Contatti -->
+        <section id="contact" class="contact-section scroll-anim">
+            <div class="container">
+                <h2 class="section-title">Contatti</h2>
+                <div class="glass-panel contact-wrapper">
+                    <div class="contact-info">
+                        <h3>Inizia una nuova missione</h3>
+                        <p>Sei interessato a collaborazioni, progetti o vuoi semplicemente scambiare due chiacchiere su
+                            biologia e codice? Mettiti in contatto con me.</p>
+                        <p class="contact-email">
+                            <span class="neon-text-purple">Email:</span> errico.diego@example.com
+                        </p>
+                    </div>
+                    <form class="contact-form" action="#" method="POST">
+                        <div class="input-group">
+                            <input type="text" id="name" placeholder=" " required class="glass-input">
+                            <label for="name">Nome / Identificativo</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="email" id="email" placeholder=" " required class="glass-input">
+                            <label for="email">Frequenza Email</label>
+                        </div>
+                        <div class="input-group">
+                            <textarea id="message" rows="4" placeholder=" " required class="glass-input"></textarea>
+                            <label for="message">Messaggio</label>
+                        </div>
+                        <button type="submit" class="btn-neon-purple submit-btn">Invia Trasmissione</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="glass-footer">
+        <div class="container text-center">
+            <div class="logo-small"><span class="neon-text-blue">ED</span>C</div>
+            <p>&copy; 2026 Errico Diego Cucciniello. Sviluppato nel cosmo.</p>
+        </div>
+    </footer>
+
+    <!-- Script per le funzionalità e le particelle -->
+    <script src="script.js"></script>
+</body>
+
+</html>
