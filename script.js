@@ -55,202 +55,152 @@ window.addEventListener('scroll', () => {
 
 
 // ==========================================
-// 3. CANVAS BACKGROUND PARTICLES (Spazio/Stelle)
+// 3. BACKGROUND 3D DNA (Three.js)
 // ==========================================
-const canvas = document.getElementById('space-canvas');
-const ctx = canvas.getContext('2d');
+const dnaContainer = document.getElementById('dna-container');
 
-let width, height;
-let particles = [];
+// Setup base Three.js
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 
-// Colori neon per le stelle/particelle
-const colors = ['#00f3ff', '#9d00ff', '#ffffff', '#0ff'];
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(window.devicePixelRatio);
+dnaContainer.appendChild(renderer.domElement);
 
-// Configurazione base particelle
-const config = {
-    particleCount: 150, // Numero di stelle
-    maxSpeed: 0.5,
-    minSize: 0.5,
-    maxSize: 2.5
+// Gruppo che conterrà tutto il DNA per poterlo ruotare facilmente
+const dnaGroup = new THREE.Group();
+scene.add(dnaGroup);
+
+// Materiali (Light Mode: Azzurri chiari, semitrasparenti)
+const sphereMaterial = new THREE.MeshPhongMaterial({
+    color: 0x0ea5e9, // Azzurro Tech
+    emissive: 0x0ea5e9,
+    emissiveIntensity: 0.2,
+    transparent: true,
+    opacity: 0.8,
+    shininess: 100
+});
+
+const linkMaterial = new THREE.MeshPhongMaterial({
+    color: 0x8b5cf6, // Lilla Pieno
+    emissive: 0x8b5cf6,
+    emissiveIntensity: 0.1,
+    transparent: true,
+    opacity: 0.5,
+    shininess: 50
+});
+
+// Geometrie
+const sphereGeometry = new THREE.SphereGeometry(0.3, 32, 32);
+const linkGeometry = new THREE.CylinderGeometry(0.05, 0.05, 3, 16);
+
+// Creazione del filamento
+const numBasePairs = 40;
+const heightOffset = 0.6;
+const radius = 2;
+const angleOffset = 0.3; // Quanto ruota ogni step per fare l'elica
+
+for (let i = 0; i < numBasePairs; i++) {
+    const y = (i - numBasePairs / 2) * heightOffset;
+    const angle = i * angleOffset;
+
+    // Posizioni sfera 1
+    const x1 = Math.cos(angle) * radius;
+    const z1 = Math.sin(angle) * radius;
+
+    // Posizioni sfera 2 (opposta)
+    const x2 = Math.cos(angle + Math.PI) * radius;
+    const z2 = Math.sin(angle + Math.PI) * radius;
+
+    // Mesh Sfera 1
+    const sphere1 = new THREE.Mesh(sphereGeometry, sphereMaterial);
+    sphere1.position.set(x1, y, z1);
+    dnaGroup.add(sphere1);
+
+    // Mesh Sfera 2
+    const sphere2 = new THREE.Mesh(sphereGeometry, sphereMaterial);
+    sphere2.position.set(x2, y, z2);
+    dnaGroup.add(sphere2);
+
+    // Connettore tra le due sfere (Cilindro)
+    const link = new THREE.Mesh(linkGeometry, linkMaterial);
+
+    // Posizione al centro tra le due sfere
+    link.position.set((x1 + x2) / 2, y, (z1 + z2) / 2);
+
+    // Orientamento del cilindro per collegarle
+    link.lookAt(x1, y, z1);
+    // Il lookAt orienta l'asse Z, ruotiamo di 90 gradi per allineare l'asse Y (default cylinder axis)
+    link.rotateX(Math.PI / 2);
+
+    dnaGroup.add(link);
+}
+
+// Luci
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+scene.add(ambientLight);
+
+const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+directionalLight.position.set(10, 20, 10);
+scene.add(directionalLight);
+
+// Posizione Camera
+camera.position.z = 15;
+camera.position.x = 8; // Offset per metterlo un po' a lato dietro il testo
+camera.lookAt(0, 0, 0);
+
+// ==========================================
+// 4. INTERAZIONE MOUSE & ANIMAZIONE
+// ==========================================
+let targetRotationX = 0;
+let targetRotationY = 0;
+let mouseX = 0;
+let mouseY = 0;
+
+const windowHalfX = window.innerWidth / 2;
+const windowHalfY = window.innerHeight / 2;
+
+document.addEventListener('mousemove', (event) => {
+    mouseX = (event.clientX - windowHalfX) * 0.001;
+    mouseY = (event.clientY - windowHalfY) * 0.001;
+});
+
+// Animation Loop
+const animate = function () {
+    requestAnimationFrame(animate);
+
+    // Rotazione costante (Elica che gira)
+    dnaGroup.rotation.y += 0.005;
+
+    // Rotazione target dipendente dal mouse
+    targetRotationY = mouseX * 0.5;
+    targetRotationX = mouseY * 0.5;
+
+    // Lerp per movimento fluido inseguendo il mouse
+    dnaGroup.rotation.y += (targetRotationY - window.mouseXLerp || 0) * 0.05;
+    dnaGroup.rotation.x += (targetRotationX - window.mouseXLerpx || 0) * 0.05;
+
+    // Salvataggio stato temporaneo per il lerp manuale
+    window.mouseXLerp = (window.mouseXLerp || 0) + (targetRotationY - (window.mouseXLerp || 0)) * 0.05;
+    window.mouseXLerpx = (window.mouseXLerpx || 0) + (targetRotationX - (window.mouseXLerpx || 0)) * 0.05;
+
+    // Leggero float up/down
+    dnaGroup.position.y = Math.sin(Date.now() * 0.001) * 0.5;
+
+    renderer.render(scene, camera);
 };
 
-// Adatta il canvas alla finestra
-function resizeCanvas() {
-    width = window.innerWidth;
-    height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
-}
+animate();
 
-// Classe Particella
-class Particle {
-    constructor() {
-        this.reset();
-        // Distribuzione iniziale semi-casuale su tutto lo schermo anche in altezza
-        this.y = Math.random() * height;
-    }
-
-    reset() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height;
-        this.size = Math.random() * (config.maxSize - config.minSize) + config.minSize;
-        // Movimento dominato verso l'alto (come bolle) o in diagonale
-        this.vx = (Math.random() - 0.5) * config.maxSpeed;
-        this.vy = (Math.random() - 0.5) * config.maxSpeed - 0.2; // Tendenza a salire
-        this.color = colors[Math.floor(Math.random() * colors.length)];
-        this.opacity = Math.random() * 0.5 + 0.2; // Opacità base
-        this.twinkleSpeed = Math.random() * 0.05 + 0.01;
-        this.twinkleDir = Math.random() > 0.5 ? 1 : -1;
-    }
-
-    update() {
-        this.x += this.vx;
-        this.y += this.vy;
-
-        // "Twinkling" effect (pulsazione luce)
-        this.opacity += this.twinkleSpeed * this.twinkleDir;
-        if (this.opacity >= 1 || this.opacity <= 0.1) {
-            this.twinkleDir *= -1;
-        }
-
-        // Se esce dallo schermo, rinasce dal lato opposto
-        if (this.y < 0) {
-            this.y = height;
-            this.x = Math.random() * width;
-        } else if (this.y > height) {
-            this.y = 0;
-            this.x = Math.random() * width;
-        }
-
-        if (this.x < 0) {
-            this.x = width;
-            this.y = Math.random() * height;
-        } else if (this.x > width) {
-            this.x = 0;
-            this.y = Math.random() * height;
-        }
-    }
-
-    draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-
-        // Aggiungi sfuocatura o bagliore neon
-        ctx.shadowBlur = this.size * 5;
-        ctx.shadowColor = this.color;
-
-        ctx.fillStyle = `rgba(${hexToRgb(this.color)}, ${this.opacity})`;
-        ctx.fill();
-        ctx.closePath();
-    }
-}
-
-// Helper: Converte HEX in RGB per l'opacità
-function hexToRgb(hex) {
-    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ?
-        `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}`
-        : '255, 255, 255';
-}
-
-// Inizializza Sistema
-function initParticles() {
-    particles = [];
-    for (let i = 0; i < config.particleCount; i++) {
-        particles.push(new Particle());
-    }
-}
-
-// Loop di Animazione
-function animateParticles() {
-    // Pulisci il frame precedente, lasciando una leggera scia (trail effect)
-    ctx.fillStyle = 'rgba(10, 10, 18, 0.4)'; // Colore di fondo del body con opacità
-    ctx.fillRect(0, 0, width, height);
-
-    particles.forEach(p => {
-        p.update();
-        p.draw();
-    });
-
-    // Connetti linee tra particelle vicine (Effetto Rete/Costellazione)
-    connectParticles();
-
-    requestAnimationFrame(animateParticles);
-}
-
-function connectParticles() {
-    let opacityValue = 1;
-    for (let a = 0; a < particles.length; a++) {
-        for (let b = a; b < particles.length; b++) {
-            let distance = ((particles[a].x - particles[b].x) * (particles[a].x - particles[b].x))
-                + ((particles[a].y - particles[b].y) * (particles[a].y - particles[b].y));
-
-            // Distanza limite per tracciare la linea
-            if (distance < (width / 10) * (height / 10)) {
-                opacityValue = 1 - (distance / 20000);
-                if (opacityValue > 0) {
-                    ctx.strokeStyle = `rgba(0, 243, 255, ${opacityValue * 0.2})`; // Linee azzurre trasparenti
-                    ctx.lineWidth = 1;
-                    ctx.beginPath();
-                    ctx.moveTo(particles[a].x, particles[a].y);
-                    ctx.lineTo(particles[b].x, particles[b].y);
-                    ctx.stroke();
-                }
-            }
-        }
-    }
-}
-
-// Event Listeners per il Canvas
+// Resize Handler
 window.addEventListener('resize', () => {
-    resizeCanvas();
-    initParticles();
-});
+    const width = window.innerWidth;
+    const height = window.innerHeight;
 
-// Avvio
-resizeCanvas();
-initParticles();
-animateParticles();
-
-// ==========================================
-// 4. INTERAZIONE MOUSE (Opzionale: repulsione/attrazione sulle stelle)
-// ==========================================
-let mouse = {
-    x: null,
-    y: null,
-    radius: 100
-}
-
-window.addEventListener('mousemove', function (event) {
-    mouse.x = event.x;
-    mouse.y = event.y;
-});
-
-// Aggiungi l'interazione del mouse alla funzione update() delle particelle
-// modificando leggermente il comportamento se vicino al cursore.
-const originalUpdate = Particle.prototype.update;
-Particle.prototype.update = function () {
-    originalUpdate.call(this); // Chiama logica base
-
-    // Interazione col mouse
-    let dx = mouse.x - this.x;
-    let dy = mouse.y - this.y;
-    let distance = Math.sqrt(dx * dx + dy * dy);
-
-    if (distance < mouse.radius) {
-        // Allontana le particelle dal mouse (Repulsione)
-        const forceDirectionX = dx / distance;
-        const forceDirectionY = dy / distance;
-
-        // Puoi invertire il segno se preferisci l'attrazione
-        this.x -= forceDirectionX * 2;
-        this.y -= forceDirectionY * 2;
-    }
-};
-
-window.addEventListener('mouseout', function () {
-    mouse.x = undefined;
-    mouse.y = undefined;
+    renderer.setSize(width, height);
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
 });
 
 // ==========================================

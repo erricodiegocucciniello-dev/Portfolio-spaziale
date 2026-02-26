@@ -1,24 +1,28 @@
 /* =========================================
-   VARIABILI GLOBALI (Colori Neon, Sfondi, Spazio)
+   VARIABILI GLOBALI (Light Mode, Apple Glass)
    ========================================= */
 :root {
-    --bg-dark: #0a0a12;
-    --text-main: #e2e8f0;
-    --text-muted: #94a3b8;
+    /* Tema Chiaro Pieno */
+    --bg-dark: #ffffff;
+    --text-main: #2d3748;
+    --text-muted: #718096;
 
-    /* Colori Neon */
-    --neon-blue: #00f3ff;
-    --neon-purple: #9d00ff;
-    --neon-cyan: #0ff;
+    /* Accenti (Azzurro Tech e Lilla Pieno) */
+    --neon-blue: #0ea5e9;
+    --neon-purple: #8b5cf6;
+    --neon-cyan: #38bdf8;
 
-    /* Colori Glassmorphism */
-    --glass-bg: rgba(255, 255, 255, 0.03);
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --glass-highlight: rgba(255, 255, 255, 0.05);
+    /* Apple Glassmorphism (Trasparenza Chiara e Sfocatura) */
+    --glass-bg: rgba(255, 255, 255, 0.4);
+    --glass-border: rgba(0, 0, 0, 0.05);
+    /* Bordo molto sottile e scuro */
+    /* --glass-highlight non ti servirà più allo stesso modo, ma lo lasciamo opzionale */
+    --glass-highlight: rgba(0, 0, 0, 0.02);
 
     /* Spaziature universali */
     --section-padding: 6rem 2rem;
-    --border-radius-lg: 16px;
+    --border-radius-lg: 24px;
+    /* Angoli ancora più rotondi per stile pillola */
 }
 
 /* =========================================
@@ -43,38 +47,40 @@ body {
 }
 
 /* =========================================
-   EFFETTI E CLASSI DI UI (Tipografia, Neon, ecc)
+   EFFETTI E CLASSI DI UI (Tipografia)
    ========================================= */
 h1,
 h2,
 h3 {
     font-weight: 800;
     line-height: 1.2;
+    color: #1a202c;
+    /* Testo più scuro per titoli */
 }
 
 .text-center {
     text-align: center;
 }
 
-/* Testi Neon Gradient */
+/* Testi Neon Gradient (Azzurro/Lilla Chiaro senza l'ombra pesante) */
 .neon-text-blue {
     color: var(--neon-blue);
-    text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
 }
 
 .neon-text-purple {
     color: var(--neon-purple);
-    text-shadow: 0 0 10px rgba(157, 0, 255, 0.5);
 }
 
-/* Base Glassmorphism */
+/* Base Glassmorphism (Stile Apple Glass/Jelly) */
 .glass-panel {
     background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(25px);
+    /* Maggiore sfocatura */
+    -webkit-backdrop-filter: blur(25px);
     border: 1px solid var(--glass-border);
     border-radius: var(--border-radius-lg);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+    /* Ombreggiatura ridotta, molto più delicata */
     padding: 2rem;
 }
 
@@ -99,48 +105,46 @@ h3 {
     border: none;
 }
 
+/* Bottone Lilla */
 .btn-neon-purple {
-    background: transparent;
-    color: var(--neon-purple);
-    border: 2px solid var(--neon-purple);
-    box-shadow: 0 0 10px rgba(157, 0, 255, 0.2), inset 0 0 10px rgba(157, 0, 255, 0.2);
+    background: var(--neon-purple);
+    color: white;
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
 }
 
 .btn-neon-purple:hover {
-    background: var(--neon-purple);
-    color: #fff;
-    box-shadow: 0 0 20px rgba(157, 0, 255, 0.6), inset 0 0 20px rgba(157, 0, 255, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
 }
 
+/* Bottone Azzurro */
 .btn-neon-blue {
-    background: transparent;
-    color: var(--neon-blue);
-    border: 2px solid var(--neon-blue);
-    box-shadow: 0 0 10px rgba(0, 243, 255, 0.2), inset 0 0 10px rgba(0, 243, 255, 0.2);
+    background: var(--neon-blue);
+    color: white;
+    box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
 }
 
 .btn-neon-blue:hover {
-    background: var(--neon-blue);
-    color: #000;
-    box-shadow: 0 0 20px rgba(0, 243, 255, 0.6), inset 0 0 20px rgba(0, 243, 255, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(14, 165, 233, 0.5);
 }
 
+/* Bottone Jelly/Ghost */
 .btn-ghost {
-    background: var(--glass-bg);
+    background: rgba(0, 0, 0, 0.03);
     color: var(--text-main);
-    border: 1px solid var(--glass-border);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(5px);
 }
 
 .btn-ghost:hover {
-    background: var(--glass-highlight);
-    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(0, 0, 0, 0.08);
 }
 
 /* =========================================
-   CANVAS BACKGROUND
+   3D DNA CONTAINER
    ========================================= */
-#space-canvas {
+#dna-container {
     position: fixed;
     top: 0;
     left: 0;
@@ -148,22 +152,33 @@ h3 {
     height: 100vh;
     z-index: -1;
     pointer-events: none;
-    /* Lascia passare i click agli elementi sottostanti */
+    /* Lascia sfumare il background al bianco per fondersi con Three.js */
+    background: radial-gradient(circle at center, rgba(14, 165, 233, 0.05), transparent 70%);
 }
 
 /* =========================================
-   HEADER & NAVBAR
+   HEADER & NAVBAR (Apple Jelly Pill)
    ========================================= */
 .glass-header {
     position: fixed;
-    top: 0;
-    width: 100%;
+    top: 20px;
+    /* Non più in cima assoluta */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 900px;
     z-index: 1000;
-    background: rgba(10, 10, 18, 0.6);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border-bottom: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.05);
+    /* Trasparenza massima (quasi invisibile) */
+    backdrop-filter: blur(40px);
+    /* Sfocatura pazzesca */
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid rgba(0, 0, 0, 0.06);
     padding: 1rem 2rem;
+    border-radius: 50px;
+    /* Forma a Pillola */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    /* Ombra morbida sotto la pillola */
     transition: all 0.3s ease;
 }
 
@@ -171,14 +186,14 @@ h3 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
+    width: 100%;
 }
 
 .logo {
     font-size: 1.8rem;
     font-weight: 800;
-    color: #fff;
+    color: #1a202c;
+    /* Contenuto scuro */
     letter-spacing: 2px;
 }
 
@@ -250,6 +265,8 @@ h3 {
     background: linear-gradient(to right, var(--neon-blue), var(--neon-purple));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    color: #1a202c;
+    /* Fallback */
 }
 
 /* =========================================
@@ -273,7 +290,9 @@ h3 {
 
 .welcome-text {
     font-size: 1.2rem;
-    color: var(--text-muted);
+    color: var(--neon-blue);
+    /* Azzurro acceso per visibilità su chiaro */
+    font-weight: 600;
     letter-spacing: 2px;
     text-transform: uppercase;
     margin-bottom: 1rem;
@@ -335,7 +354,7 @@ h3 {
 
 .project-image-placeholder {
     height: 200px;
-    background: linear-gradient(135deg, rgba(157, 0, 255, 0.1), rgba(0, 243, 255, 0.1));
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(14, 165, 233, 0.05));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -350,7 +369,7 @@ h3 {
 .project-info h3 {
     font-size: 1.8rem;
     margin-bottom: 1rem;
-    color: #fff;
+    color: #1a202c;
 }
 
 .project-info p {
@@ -366,9 +385,9 @@ h3 {
 }
 
 .glass-tag {
-    background: rgba(0, 243, 255, 0.1);
-    border: 1px solid rgba(0, 243, 255, 0.2);
-    color: var(--neon-cyan);
+    background: rgba(14, 165, 233, 0.1);
+    border: 1px solid rgba(14, 165, 233, 0.15);
+    color: var(--neon-blue);
     padding: 0.4rem 1rem;
     border-radius: 20px;
     font-size: 0.85rem;
@@ -402,7 +421,7 @@ h3 {
 .contact-email {
     font-size: 1.2rem;
     font-weight: 600;
-    color: #fff;
+    color: #1a202c;
     background: var(--glass-highlight);
     padding: 1rem;
     border-radius: 8px;
@@ -426,9 +445,10 @@ h3 {
 /* Struttura form: label in basso per usare il + selector */
 .glass-input {
     width: 100%;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.5);
+    /* Sfondo chiaro input */
     border: 1px solid var(--glass-border);
-    color: #fff;
+    color: #1a202c;
     padding: 1.2rem 1rem;
     border-radius: 8px;
     font-family: inherit;
@@ -439,8 +459,8 @@ h3 {
 
 .glass-input:focus {
     border-color: var(--neon-purple);
-    box-shadow: 0 0 10px rgba(157, 0, 255, 0.2);
-    background: rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.15);
+    background: rgba(255, 255, 255, 0.8);
 }
 
 .input-group label {
@@ -459,7 +479,8 @@ h3 {
     left: 0.8rem;
     font-size: 0.8rem;
     color: var(--neon-purple);
-    background: var(--bg-dark);
+    background: #f8fafc;
+    /* Grigio chiarissimo/bianco */
     padding: 0 0.4rem;
     border-radius: 4px;
 }
@@ -476,7 +497,7 @@ h3 {
    ========================================= */
 .glass-footer {
     padding: 2rem;
-    background: rgba(10, 10, 18, 0.8);
+    background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(10px);
     border-top: 1px solid var(--glass-border);
 }
@@ -484,7 +505,7 @@ h3 {
 .logo-small {
     font-size: 1.5rem;
     font-weight: 800;
-    color: #fff;
+    color: #1a202c;
     margin-bottom: 0.5rem;
 }
 
@@ -534,9 +555,9 @@ h3 {
 
 .glass-input-small {
     flex: 1;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(255, 255, 255, 0.5);
     border: 1px solid var(--glass-border);
-    color: #fff;
+    color: #1a202c;
     padding: 0.6rem 1rem;
     border-radius: 8px;
     outline: none;
@@ -544,8 +565,8 @@ h3 {
 }
 
 .glass-input-small:focus {
-    border-color: var(--neon-cyan);
-    box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 10px rgba(14, 165, 233, 0.15);
 }
 
 .btn-small {
@@ -619,8 +640,8 @@ h3 {
 .result-panel {
     padding: 1rem;
     margin-bottom: 1rem;
-    border-left: 3px solid var(--neon-cyan);
-    background: rgba(0, 243, 255, 0.05);
+    border-left: 3px solid var(--neon-blue);
+    background: rgba(14, 165, 233, 0.05);
     text-align: left;
 }
 
@@ -637,7 +658,7 @@ h3 {
 }
 
 .result-panel strong {
-    color: var(--text-muted);
+    color: #1a202c;
 }
 
 /* =========================================
@@ -673,15 +694,19 @@ h3 {
     .nav-links {
         position: fixed;
         left: -100%;
-        top: 70px;
+        top: 80px;
         gap: 0;
         flex-direction: column;
-        background: rgba(10, 10, 18, 0.95);
+        background: rgba(255, 255, 255, 0.95);
+        /* Modificato per Light Mode */
         backdrop-filter: blur(20px);
-        width: 100%;
+        width: 90%;
+        border-radius: 24px;
+        margin: 0 5%;
         text-align: center;
         transition: 0.3s;
-        border-bottom: 1px solid var(--glass-border);
+        border: 1px solid var(--glass-border);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     }
 
     .nav-links.active {
