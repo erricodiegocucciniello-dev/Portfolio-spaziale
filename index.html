@@ -12,11 +12,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 
 <body>
-    <!-- Sfondo per l'effetto particellare/spaziale -->
-    <canvas id="space-canvas"></canvas>
+    <!-- Sfondo per l'effetto 3D DNA -->
+    <div id="dna-container"></div>
 
     <!-- Header & Navigazione Glassmorphism -->
     <header class="glass-header">
@@ -43,7 +46,6 @@
         <!-- Hero Section -->
         <section id="hero" class="hero-section scroll-anim">
             <div class="glass-panel text-center">
-                <p class="welcome-text">Benvenuto nel mio universo</p>
                 <h1>Sono <span class="neon-text-blue">Errico Diego Cucciniello</span></h1>
                 <p class="subtitle">Studente di Bioinformatica & Web Developer</p>
                 <div class="hero-buttons">
@@ -82,7 +84,6 @@
                     <article class="glass-panel project-card">
                         <div class="project-image-placeholder">
                             <!-- Qui andrà l'immagine o il render del progetto -->
-                            <span class="icon-molecule">🧬</span>
                         </div>
                         <div class="project-info">
                             <h3>Laboratorio delle Proteine</h3>
@@ -149,7 +150,7 @@
     <footer class="glass-footer">
         <div class="container text-center">
             <div class="logo-small"><span class="neon-text-blue">ED</span>C</div>
-            <p>&copy; 2026 Errico Diego Cucciniello. Sviluppato nel cosmo.</p>
+            <p>&copy; 2026 Errico Diego Cucciniello.</p>
         </div>
     </footer>
 
