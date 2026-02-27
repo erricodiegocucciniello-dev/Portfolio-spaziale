@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Progetti | Molecular Dynamics Lab - Errico Diego Cucciniello">
+    <title>Progetti | Molecular Dynamics Lab</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Fonts: Outfit per un look moderno e tech -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- FontAwesome (icone social) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <!-- Sfondo per l'effetto 3D DNA -->
+    <div id="dna-container"></div>
+
+    <!-- Header & Navigazione Glassmorphism -->
+    <header class="glass-header">
+        <nav class="navbar">
+            <div class="logo">
+                <a href="index.html" style="text-decoration: none; color: inherit;"><span
+                        class="neon-text-blue">ED</span>C</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#about">Chi Sono</a></li>
+                <li><a href="projects.html">Progetti</a></li>
+                <li><a href="index.html#contact">Contatti</a></li>
+            </ul>
+            <!-- Menu Hamburger per Mobile -->
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Sezione Titolo e Area Vuota -->
+        <section class="projects-section scroll-anim"
+            style="min-height: 85vh; display: flex; align-items: center; justify-content: center; padding-top: 150px;">
+            <div class="container text-center">
+                <h1 class="neon-text-blue"
+                    style="font-size: 3.5rem; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 2px;">
+                    Molecular Dynamics Lab</h1>
+
+                <!-- Area vuota per i futuri calcoli sulla Kinesina -->
+                <div class="glass-panel"
+                    style="min-height: 450px; display: flex; align-items: center; justify-content: center; border: 2px dashed rgba(14, 165, 233, 0.4); background: rgba(255, 255, 255, 0.2); box-shadow: 0 8px 32px rgba(14, 165, 233, 0.05);">
+                    <p style="font-size: 1.5rem; color: #718096; font-weight: 300;">[ Area riservata ai futuri calcoli e
+                        simulazioni sulla Kinesina ]</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="glass-footer">
+        <div class="container text-center">
+            <div class="logo-small">
+                <a href="index.html" style="text-decoration: none; color: inherit;"><span
+                        class="neon-text-blue">ED</span>C</a>
+            </div>
+            <p>&copy; 2026 Errico Diego Cucciniello.</p>
+        </div>
+    </footer>
+
+    <!-- Script per le funzionalità e le particelle -->
+    <script src="script.js"></script>
+</body>
+
+</html>
