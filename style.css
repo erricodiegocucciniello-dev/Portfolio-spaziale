@@ -264,6 +264,7 @@ h3 {
     letter-spacing: 3px;
     background: linear-gradient(to right, var(--neon-blue), var(--neon-purple));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     color: #1a202c;
     /* Fallback */
@@ -659,6 +660,273 @@ h3 {
 
 .result-panel strong {
     color: #1a202c;
+}
+
+/* =========================================
+   SOCIAL ICONS & EMAIL LINK
+   ========================================= */
+
+.email-link {
+    color: var(--text-main);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.email-link:hover {
+    color: var(--neon-blue);
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+/* Icona Jelly: cerchio traslucido con bounce al hover */
+.social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    color: #1a202c;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.3s ease,
+        background 0.3s ease,
+        color 0.3s ease;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.social-icon:hover {
+    transform: scale(1.18) translateY(-3px);
+    background: rgba(14, 165, 233, 0.1);
+    border-color: rgba(14, 165, 233, 0.25);
+    color: var(--neon-blue);
+    box-shadow: 0 8px 20px rgba(14, 165, 233, 0.2),
+        0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+/* Placeholder sezione progetti */
+.projects-placeholder {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.projects-placeholder-text {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+}
+
+/* =========================================
+   PUBMED LIVE PULSE
+   ========================================= */
+
+.pubmed-section {
+    padding: var(--section-padding);
+}
+
+.pubmed-subtitle {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin-top: -1.5rem;
+    margin-bottom: 3rem;
+}
+
+.pubmed-subtitle strong {
+    color: var(--neon-blue);
+}
+
+.pubmed-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+/* Loading state */
+.pubmed-loading {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem;
+    color: var(--neon-cyan);
+    animation: pulse 1.5s infinite;
+}
+
+.pubmed-loading p {
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: var(--text-muted);
+}
+
+/* Error state */
+.pubmed-error {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-muted);
+}
+
+/* === CARD APPLE GLASS === */
+.pubmed-card {
+    padding: 0;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.35s ease;
+    display: flex;
+    flex-direction: column;
+    /* Trasparenza amplificata Apple Glass */
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 8px 32px rgba(14, 165, 233, 0.06),
+        0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.pubmed-card:hover {
+    transform: translateY(-10px) scale(1.01);
+    box-shadow: 0 20px 50px rgba(14, 165, 233, 0.15),
+        0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.pubmed-card:focus {
+    outline: 2px solid var(--neon-blue);
+    outline-offset: 2px;
+}
+
+/* Immagine scientifica in alto */
+.pubmed-card-img {
+    position: relative;
+    height: 180px;
+    background-size: cover;
+    background-position: center;
+    background-color: rgba(14, 165, 233, 0.05);
+    /* Overlay sfumato di vetro sopra l'immagine */
+    /* Overlay vetro */
+}
+
+.pubmed-card-img::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+            rgba(255, 255, 255, 0.08) 0%,
+            rgba(255, 255, 255, 0.35) 100%);
+}
+
+/* === LIVE BADGE === */
+.live-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(14, 165, 233, 0.25);
+    color: #0ea5e9;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 10px 4px 8px;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(14, 165, 233, 0.2);
+}
+
+/* LIVE DOT — pallino blu pulsante */
+.live-dot {
+    width: 8px;
+    height: 8px;
+    background: #0ea5e9;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+    animation: livePulse 1.8s ease-in-out infinite;
+    box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.7);
+}
+
+@keyframes livePulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.7);
+        transform: scale(1);
+    }
+
+    50% {
+        box-shadow: 0 0 0 7px rgba(14, 165, 233, 0);
+        transform: scale(1.15);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(14, 165, 233, 0);
+        transform: scale(1);
+    }
+}
+
+/* === CORPO CARD === */
+.pubmed-card-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    flex: 1;
+}
+
+.pubmed-journal {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--neon-blue);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.pubmed-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1a202c;
+    line-height: 1.4;
+    margin: 0.2rem 0 0.5rem;
+}
+
+.pubmed-authors {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.pubmed-date {
+    font-size: 0.78rem;
+    color: var(--neon-purple);
+    font-weight: 600;
+}
+
+.pubmed-read-more {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: auto;
+    padding-top: 1rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--neon-blue);
+    transition: gap 0.2s ease;
+}
+
+.pubmed-card:hover .pubmed-read-more {
+    gap: 10px;
 }
 
 /* =========================================

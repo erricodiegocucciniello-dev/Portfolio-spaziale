@@ -206,6 +206,122 @@ window.addEventListener('resize', () => {
 // ==========================================
 // 5. GESTIONE PDB RESEARCH BOX
 // ==========================================
+
+// ==========================================
+// 6. PUBMED LIVE PULSE
+// ==========================================
+
+// Immagini scientifiche dinamiche da Unsplash (ambito biomedico/lab)
+const SCIENCE_IMAGES = [
+    'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=600&q=80', // lab petri
+    'https://images.unsplash.com/photo-1576086213369-97a306d36557?w=600&q=80', // DNA strand
+    'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&q=80', // neuron
+    'https://images.unsplash.com/photo-1614935151651-0bea6508db6b?w=600&q=80', // molecules
+    'https://images.unsplash.com/photo-1603126857599-f6e157fa2fe6?w=600&q=80', // microscope
+    'https://images.unsplash.com/photo-1507413245164-6160d8298b31?w=600&q=80', // biotech lab
+];
+
+function getRandomScienceImage(seed) {
+    return SCIENCE_IMAGES[seed % SCIENCE_IMAGES.length];
+}
+
+function truncate(str, max) {
+    if (!str) return 'N/D';
+    return str.length > max ? str.substring(0, max) + '…' : str;
+}
+
+function buildPubMedCard(article, index) {
+    const { pmid, title, authors, journal, pubDate, abstract } = article;
+    const imgUrl = getRandomScienceImage(index + pmid % 6);
+    const pubMedUrl = `https://pubmed.ncbi.nlm.nih.gov/${pmid}/`;
+
+    return `
+        <article class="pubmed-card glass-panel" onclick="window.open('${pubMedUrl}', '_blank')" role="link" tabindex="0" aria-label="Leggi articolo: ${title}">
+            <div class="pubmed-card-img" style="background-image: url('${imgUrl}');">
+                <span class="live-badge"><span class="live-dot"></span>LIVE</span>
+            </div>
+            <div class="pubmed-card-body">
+                <p class="pubmed-journal">${truncate(journal, 55)}</p>
+                <h3 class="pubmed-title">${truncate(title, 110)}</h3>
+                <p class="pubmed-authors">${truncate(authors, 70)}</p>
+                <p class="pubmed-date">${pubDate}</p>
+                <div class="pubmed-read-more">
+                    <span>Leggi su PubMed</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </div>
+            </div>
+        </article>
+    `;
+}
+
+async function fetchPubMedArticles() {
+    const grid = document.getElementById('pubmed-grid');
+    if (!grid) return;
+
+    const QUERY = 'bioinformatics';
+    const RETMAX = 3;
+    const BASE = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/';
+
+    try {
+        // Step 1: esearch — recupera gli ID degli ultimi 3 articoli
+        const searchUrl = `${BASE}esearch.fcgi?db=pubmed&term=${encodeURIComponent(QUERY)}&sort=pub+date&retmax=${RETMAX}&retmode=json`;
+        const searchRes = await fetch(searchUrl);
+        if (!searchRes.ok) throw new Error('Errore esearch');
+        const searchData = await searchRes.json();
+        const ids = searchData.esearchresult?.idlist;
+        if (!ids || ids.length === 0) throw new Error('Nessun articolo trovato');
+
+        // Step 2: efetch — recupera i dettagli XML degli articoli
+        const fetchUrl = `${BASE}efetch.fcgi?db=pubmed&id=${ids.join(',')}&retmode=xml`;
+        const fetchRes = await fetch(fetchUrl);
+        if (!fetchRes.ok) throw new Error('Errore efetch');
+        const xmlText = await fetchRes.text();
+
+        // Step 3: Parsing XML
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(xmlText, 'application/xml');
+        const articles = xml.querySelectorAll('PubmedArticle');
+
+        const parsed = Array.from(articles).map((art, i) => {
+            const getTag = (el, tag) => el.querySelector(tag)?.textContent?.trim() || '';
+
+            const pmid = getTag(art, 'PMID');
+            const title = getTag(art, 'ArticleTitle') || 'Titolo non disponibile';
+
+            // Autori
+            const authorNodes = art.querySelectorAll('Author');
+            const authors = Array.from(authorNodes).slice(0, 3).map(a => {
+                const last = getTag(a, 'LastName');
+                const init = getTag(a, 'Initials');
+                return last ? `${last} ${init}`.trim() : '';
+            }).filter(Boolean).join(', ') + (authorNodes.length > 3 ? ' et al.' : '');
+
+            const journal = getTag(art, 'Title') || getTag(art, 'ISOAbbreviation') || 'Journal';
+            const year = getTag(art, 'Year') || getTag(art, 'MedlineDate') || '';
+            const month = getTag(art, 'Month') || '';
+            const pubDate = [month, year].filter(Boolean).join(' ');
+
+            return { pmid, title, authors, journal, pubDate };
+        });
+
+        // Step 4: Render cards
+        grid.innerHTML = parsed.map((art, i) => buildPubMedCard(art, i)).join('');
+
+    } catch (err) {
+        console.error('PubMed fetch error:', err);
+        grid.innerHTML = `
+            <div class="pubmed-error glass-panel">
+                <p>⚠️ Impossibile connettersi a PubMed in questo momento.</p>
+                <a href="https://pubmed.ncbi.nlm.nih.gov/?term=bioinformatics&sort=pubdate" target="_blank" class="btn-neon-blue btn-small" style="display:inline-block;margin-top:1rem;">Apri PubMed direttamente</a>
+            </div>
+        `;
+    }
+}
+
+// Avvia il fetch PubMed quando la pagina è pronta
+window.addEventListener('load', fetchPubMedArticles);
+
+
 const analyzeBtn = document.getElementById('analyze-btn');
 const pdbInput = document.getElementById('pdb-input');
 const pdbLoading = document.getElementById('pdb-loading');

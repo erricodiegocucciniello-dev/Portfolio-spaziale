@@ -4,8 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio di Errico Diego Cucciniello, Studente di Bioinformatica.">
-    <title>Errico Diego Cucciniello - Portfolio</title>
+    <meta name="description"
+        content="Portfolio di Errico Diego Cucciniello, bioinformatico specializzato in motori molecolari, analisi genomica e sviluppo web scientifico.">
+    <meta name="keywords"
+        content="Bioinformatics, Molecular Motors, Genomics, Bioinformatica, Portfolio, Errico Diego Cucciniello, Protein, DNA, Next-Generation Sequencing">
+    <meta name="author" content="Errico Diego Cucciniello">
+    <meta name="robots" content="index, follow">
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Errico Diego Cucciniello | Bioinformatics & Molecular Motors">
+    <meta property="og:description"
+        content="Portfolio di Errico Diego Cucciniello, bioinformatico specializzato in motori molecolari, analisi genomica e sviluppo web scientifico.">
+    <meta property="og:locale" content="it_IT">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Errico Diego Cucciniello | Bioinformatics & Molecular Motors">
+    <meta name="twitter:description"
+        content="Bioinformatica, motori molecolari e sviluppo web: esplora i progetti di Errico Diego Cucciniello.">
+    <title>Errico Diego Cucciniello | Bioinformatics & Molecular Motors</title>
     <link rel="stylesheet" href="style.css">
 
     <!-- Google Fonts: Outfit per un look moderno e tech -->
@@ -15,6 +31,10 @@
 
     <!-- Three.js Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- FontAwesome (icone social) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -55,6 +75,23 @@
             </div>
         </section>
 
+        <!-- ========== NEWS: Live PubMed Pulse ========== -->
+        <section id="pubmed" class="pubmed-section scroll-anim">
+            <div class="container">
+                <h2 class="section-title">NEWS &mdash; Live PubMed Pulse</h2>
+                <p class="pubmed-subtitle">Ultimi articoli su <strong>Bioinformatics</strong> recuperati in tempo reale
+                    da PubMed/NCBI</p>
+                <div id="pubmed-grid" class="pubmed-grid">
+                    <!-- Le card vengono iniettate via JS -->
+                    <div class="pubmed-loading">
+                        <div class="space-spinner"></div>
+                        <p>Connessione a PubMed in corso&hellip;</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ========== FINE PubMed Pulse ========== -->
+
         <!-- Sezione Chi Sono -->
         <section id="about" class="about-section scroll-anim">
             <div class="container">
@@ -80,36 +117,11 @@
             <div class="container">
                 <h2 class="section-title">I miei Progetti</h2>
                 <div class="projects-grid">
-                    <!-- Progetto 1 -->
-                    <article class="glass-panel project-card">
-                        <div class="project-image-placeholder">
-                            <!-- Qui andrà l'immagine o il render del progetto -->
-                        </div>
-                        <div class="project-info">
-                            <h3>Laboratorio delle Proteine</h3>
-                            <p>Una piattaforma interattiva per visualizzare, simulare e analizzare le strutture
-                                molecolari delle proteine e le loro interazioni biochimiche.</p>
-                            <div class="tech-stack">
-                                <span class="glass-tag">Bioinformatica</span>
-                                <span class="glass-tag">3D Render</span>
-                                <span class="glass-tag">JavaScript</span>
-                            </div>
-                            <!-- Box Ricerca PDB -->
-                            <div class="pdb-search-box">
-                                <input type="text" id="pdb-input" class="glass-input-small"
-                                    placeholder="Es: 1A8M o Insulina...">
-                                <button id="analyze-btn" class="btn-neon-blue btn-small">Analizza</button>
-                            </div>
-                            <div id="pdb-loading" class="hidden">
-                                <div class="space-spinner"></div>
-                                <p>Scansione database PDB in corso...</p>
-                            </div>
-                            <div id="pdb-result" class="glass-panel result-panel hidden">
-                            </div>
-                            <!-- Fine Box -->
-                        </div>
-                    </article>
-                    <!-- Spazio per i futuri progetti -->
+                    <!-- I progetti verranno aggiunti nella pagina dedicata -->
+                    <div class="projects-placeholder glass-panel">
+                        <p class="projects-placeholder-text">🔬 I progetti stanno arrivando — visita presto questa
+                            sezione!</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -124,20 +136,38 @@
                         <p>Sei interessato a collaborazioni, progetti o vuoi semplicemente scambiare due chiacchiere su
                             biologia e codice? Mettiti in contatto con me.</p>
                         <p class="contact-email">
-                            <span class="neon-text-purple">Email:</span> errico.diego@example.com
+                            <span class="neon-text-purple">Email:</span>
+                            <a href="mailto:erricodiego.cucciniello@gmail.com"
+                                class="email-link">erricodiego.cucciniello@gmail.com</a>
                         </p>
+                        <!-- Icone Social -->
+                        <div class="social-links">
+                            <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="social-icon"
+                                aria-label="Instagram">
+                                <i class="fa-brands fa-instagram"></i>
+                            </a>
+                            <a href="https://www.facebook.com/" target="_blank" rel="noopener" class="social-icon"
+                                aria-label="Facebook">
+                                <i class="fa-brands fa-facebook-f"></i>
+                            </a>
+                            <a href="https://x.com/" target="_blank" rel="noopener" class="social-icon"
+                                aria-label="X (Twitter)">
+                                <i class="fa-brands fa-x-twitter"></i>
+                            </a>
+                        </div>
                     </div>
-                    <form class="contact-form" action="#" method="POST">
+                    <form class="contact-form" action="https://formspree.io/f/xreadkzr" method="POST">
                         <div class="input-group">
-                            <input type="text" id="name" placeholder=" " required class="glass-input">
+                            <input type="text" id="name" name="name" placeholder=" " required class="glass-input">
                             <label for="name">Nome / Identificativo</label>
                         </div>
                         <div class="input-group">
-                            <input type="email" id="email" placeholder=" " required class="glass-input">
-                            <label for="email">Frequenza Email</label>
+                            <input type="email" id="email" name="email" placeholder=" " required class="glass-input">
+                            <label for="email">Email</label>
                         </div>
                         <div class="input-group">
-                            <textarea id="message" rows="4" placeholder=" " required class="glass-input"></textarea>
+                            <textarea id="message" name="message" rows="4" placeholder=" " required
+                                class="glass-input"></textarea>
                             <label for="message">Messaggio</label>
                         </div>
                         <button type="submit" class="btn-neon-purple submit-btn">Invia Trasmissione</button>
