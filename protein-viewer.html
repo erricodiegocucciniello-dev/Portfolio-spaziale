@@ -16,13 +16,21 @@
     <!-- Three.js Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
+    <!-- Mol* Viewer CSS -->
+    <link rel="stylesheet" type="text/css"
+        href="https://www.ebi.ac.uk/pdbe/pdb-component-library/css/pdbe-molstar-1.2.1.css" />
+
+    <!-- Mol* Viewer JS -->
+    <script type="text/javascript"
+        src="https://www.ebi.ac.uk/pdbe/pdb-component-library/js/pdbe-molstar-plugin-1.2.1.js"></script>
+
     <!-- FontAwesome (icone social) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
-    <!-- Navbar / Sfondo bianco (Niente DNA qui) -->
+    <!-- Navbar / Sfondo bianco puro per il viewer 3D -->
 
     <!-- Header & Navigazione Glassmorphism -->
     <header class="glass-header">
@@ -48,35 +56,21 @@
 
     <main>
         <!-- Sezione Titolo e Area Vuota -->
-        <section class="projects-section scroll-anim"
-            style="min-height: 85vh; display: flex; align-items: center; justify-content: center; padding-top: 150px;">
+        <section class="projects-section" style="padding-top: 120px; padding-bottom: 2rem;">
             <div class="container text-center">
                 <h1 class="neon-text-blue"
                     style="font-size: 3.5rem; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 2px;">
-                    Molecular Dynamics Lab</h1>
+                    Visualizzatore Proteico</h1>
+                <p
+                    style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem; max-width: 800px; margin-inline: auto;">
+                    Esplora modelli molecolari 3D ad alta risoluzione. Trascina per ruotare, usa la rotellina per lo
+                    zoom.
+                </p>
 
-                <!-- Area vuota ripristinata per i futuri calcoli sulla Kinesina -->
+                <!-- Area dedicata al visualizzatore 3D (Larghezza intera per maggior impatto) -->
                 <div class="glass-panel"
-                    style="min-height: 450px; display: flex; align-items: center; justify-content: center; border: 2px dashed rgba(14, 165, 233, 0.4); background: rgba(255, 255, 255, 0.2); box-shadow: 0 8px 32px rgba(14, 165, 233, 0.05); margin-bottom: 3rem;">
-                    <p style="font-size: 1.5rem; color: #718096; font-weight: 300;">[ Area riservata ai futuri calcoli e
-                        simulazioni sulla Kinesina ]</p>
-                </div>
-
-                <!-- Nuova Sezione Link -->
-                <h2 class="section-title" style="font-size: 2rem; margin-top: 4rem;">Modelli ed Esplorazione</h2>
-                <div class="projects-grid"
-                    style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); text-align: left;">
-                    <div class="project-card glass-panel" style="padding: 0;">
-                        <div class="project-image-placeholder" style="font-size: 4rem; height: 180px;">🧬</div>
-                        <div class="project-info">
-                            <h3 style="color: #1a202c; font-size: 1.5rem; margin-bottom: 0.5rem;">Visualizzatore
-                                Proteico</h3>
-                            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Esplora strutture molecolari
-                                interattive in 3D ad alta risoluzione grazie a Mol* Viewer.</p>
-                            <a href="protein-viewer.html" class="btn-neon-blue" style="display: inline-block;">Apri
-                                Visualizzatore</a>
-                        </div>
-                    </div>
+                    style="width: 100%; height: 75vh; padding: 0; overflow: hidden; position: relative; border: 1px solid rgba(14, 165, 233, 0.4); background: rgba(255, 255, 255, 0.1); box-shadow: 0 8px 32px rgba(14, 165, 233, 0.1); border-radius: var(--border-radius-lg);">
+                    <div id="myViewer" style="position: absolute; width: 100%; height: 100%;"></div>
                 </div>
             </div>
         </section>
@@ -94,7 +88,6 @@
 
     <!-- Script per le funzionalità senza DNA 3D -->
     <script>
-        // Carica il menu hamburger e gli ascoltatori ma ignora la funzione DNA se l'id non esiste.
         document.addEventListener('DOMContentLoaded', () => {
             const hamburger = document.querySelector('.hamburger');
             const navLinks = document.querySelector('.nav-links');
@@ -104,6 +97,36 @@
                     navLinks.classList.toggle('active');
                 });
             }
+        });
+    </script>
+
+    <!-- Script di Inizializzazione del PDB Viewer (Mol*) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Crea un'istanza del plugin Molstar
+            var viewerInstance = new PDBeMolstarPlugin();
+
+            // Opzioni di visualizzazione (colori adatti al tema Glassmorphism/spaziale)
+            var options = {
+                customData: {
+                    url: 'myoglobin.pdb',
+                    format: 'pdb'
+                },
+                hideControls: true, // Nascondi l'interfaccia complessa di default per maggior pulizia
+                hideCanvasControls: ['selection', 'animation', 'controlToggle', 'controlInfo'],
+                bgColor: { r: 255, g: 255, b: 255, a: 0 }, // Sfondo trasparente per far vedere il vetro/background dietro
+                lighting: 'flat', // Illuminazione morbida
+                spin: true // Fa ruotare la molecola per farla sembrare dinamica
+            };
+
+            // Inizializza il visualizzatore dentro al div myViewer
+            var viewerContainer = document.getElementById('myViewer');
+            viewerInstance.render(viewerContainer, options);
+
+            // Applica stili personalizzati al container per renderlo più integrato dopo il caricamento
+            viewerInstance.events.loadComplete.subscribe(() => {
+                console.log('Struttura PDB caricata con successo!');
+            });
         });
     </script>
 </body>
